@@ -6,11 +6,23 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=8080
+      - MONGODB_URI=mongodb://mongo:27017/woovi_leaky_bucket
     volumes:
       - .:/app
       - /app/node_modules
     command: yarn dev
     restart: unless-stopped
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7-jammy
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=woovi_leaky_bucket
+    volumes:
+      - mongo_data:/data/db
 
   app-prod:
     build: .
@@ -19,6 +31,12 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=8080
+      - MONGODB_URI=mongodb://mongo:27017/woovi_leaky_bucket
     restart: unless-stopped
+    depends_on:
+      - mongo
     profiles:
       - production
+
+volumes:
+  mongo_data:
