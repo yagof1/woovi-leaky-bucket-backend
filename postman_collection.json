@@ -1,0 +1,100 @@
+{
+  "info": {
+    "name": "Woovi Leaky Bucket API",
+    "description": "GraphQL API for Woovi Leaky Bucket Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Hello Query",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"{ hello }\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": ["{{baseUrl}}"],
+          "path": ["graphql"]
+        }
+      }
+    },
+    {
+      "name": "Query Pix Key",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwtToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation { queryPixKey(key: \\\"user@email.com\\\") }\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": ["{{baseUrl}}"],
+          "path": ["graphql"]
+        }
+      }
+    },
+    {
+      "name": "GraphQL Introspection",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query IntrospectionQuery { __schema { queryType { name } mutationType { name } subscriptionType { name } types { ...FullType } directives { name description locations args { ...InputValue } } } } fragment FullType on __Type { kind name description fields(includeDeprecated: true) { name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) { name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } }\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": ["{{baseUrl}}"],
+          "path": ["graphql"]
+        }
+      }
+    },
+    {
+      "name": "API Info",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": ["{{baseUrl}}"],
+          "path": [""]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "jwtToken",
+      "value": "your-jwt-token-here",
+      "type": "string"
+    }
+  ]
+}
